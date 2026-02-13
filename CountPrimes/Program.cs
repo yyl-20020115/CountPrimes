@@ -37,7 +37,7 @@ internal class Program
             / ((core * core + Pi2));
     }
 
-    static double DPi(double x) => NPi(Math.Log2(x)) + Math.Log10(x);
+    static double DPi(double x) => NPi(Math.Log2(x));
     static void Main(string[] args)
     {
         long total = 0;
