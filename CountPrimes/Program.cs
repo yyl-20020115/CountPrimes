@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CountPrimes;
+﻿namespace CountPrimes;
 
 internal class Program
 {
@@ -23,17 +21,17 @@ internal class Program
     static double NPi(int n)
     {
         var t = (1L << n);
-        var s = (1L << n) - 1;
+        var s = t - 1;
         var core = Math.Log(s);
-
-        return (1L << n) * (Gamma * n + 2 * Math.PI * Math.Log(2))
+        return t * (Gamma * n + 2 * Math.PI * Math.Log(2))
             / ((core * core + Pi2));
     }
     static double NPi(double n)
     {
-        var s = Math.Pow(2.0, n) - 1;
+        var t = Math.Pow(2.0, n);
+        var s =  t - 1;
         var core = Math.Log(s);
-        return Math.Pow(2.0, n) * (Gamma * n + 2 * Math.PI * Math.Log(2))
+        return t * (Gamma * n + 2 * Math.PI * Math.Log(2))
             / ((core * core + Pi2));
     }
 
@@ -58,8 +56,6 @@ internal class Program
             }
         }
 
-        List<(int, double)> nr = [];
-
         long i = 0;
         total = 0;
         for (int n = 1; n <= 35; n++)
@@ -73,11 +69,6 @@ internal class Program
             var r = total / im;
             var d = im - total;
             Console.WriteLine($"total count of primes <= 2^{n} :{total} im={(int)im}, err={d / total}");
-            nr.Add((n, r));
-        }
-        foreach (var (n, r) in nr)
-        {
-            Console.Write($"{{{n},{r}}},");
         }
     }
 }
