@@ -17,21 +17,19 @@ internal class Program
     const double Pi2 = Math.PI * Math.PI;
 
     const double Gamma = 0.577215664901532860606512090082402431042159335;
-
+    static readonly double Log2 = Math.Log(2);
     static double NPi(int n)
     {
         var t = (1L << n);
-        var s = t - 1;
-        var core = Math.Log(s);
-        return t * (Gamma * n + 2 * Math.PI * Math.Log(2))
+        var core = Math.Log(t - 1);
+        return t * (Gamma * n + 2 * Math.PI * Log2)
             / ((core * core + Pi2));
     }
     static double NPi(double n)
     {
         var t = Math.Pow(2.0, n);
-        var s = t - 1;
-        var core = Math.Log(s);
-        return t * (Gamma * n + 2 * Math.PI * Math.Log(2))
+        var core = Math.Log(t - 1);
+        return t * (Gamma * n + 2 * Math.PI * Log2)
             / ((core * core + Pi2));
     }
 
