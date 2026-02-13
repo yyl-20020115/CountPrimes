@@ -29,7 +29,7 @@ internal class Program
     static double NPi(double n)
     {
         var t = Math.Pow(2.0, n);
-        var s =  t - 1;
+        var s = t - 1;
         var core = Math.Log(s);
         return t * (Gamma * n + 2 * Math.PI * Math.Log(2))
             / ((core * core + Pi2));
@@ -45,14 +45,14 @@ internal class Program
             var p = DPi(c);
             var b = IsPrime(c);
             if (b) total++;
-            var d = total - p;
+            var d = p - total;
             if (b)
             {
-                Console.WriteLine($"number of primes <={c}:{total}\t{p:N8}\td={d:N8}");
+                Console.WriteLine($"count(p) <= {c} : {total}\tPi(p)={p:N8}\terr={d / total:N8}");
             }
             else
             {
-                Console.WriteLine($"number of primes <={c}:{total}\t{p:N8}");
+                Console.WriteLine($"count(p) <= {c} : {total}\tPi(p)={p:N8}");
             }
         }
 
@@ -66,9 +66,8 @@ internal class Program
                 if (IsPrime(i)) total++;
             }
             var im = NPi(n);
-            var r = total / im;
             var d = im - total;
-            Console.WriteLine($"total count of primes <= 2^{n} :{total} im={(int)im}, err={d / total}");
+            Console.WriteLine($"count(p) <= 2^{n} : {total}\tPi(p)={im:N8}\terr={d / total:N8}");
         }
     }
 }
