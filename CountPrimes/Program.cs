@@ -16,7 +16,9 @@ internal class Program
     }
     const double Pi2 = Math.PI * Math.PI;
 
-    const double Gamma = 0.577215664901532860606512090082402431042159335;
+    //const double Gamma = 0.577215664901532860606512090082402431042159335;
+
+    const double Gamma = Math.PI / 2.0 - 1;
     static readonly double Log2 = Math.Log(2);
     static double NPi(int n)
     {
@@ -34,8 +36,30 @@ internal class Program
     }
 
     static double DPi(double x) => NPi(Math.Log2(x));
+    static double s2 = Math.Sqrt(2);
+    static double s3 = Math.Sqrt(3);
+    static double s5 = Math.Sqrt(5);
+
+
+    static double GetGamma(long S = 10000)
+    {
+        var q = S * S;
+        var s = 0.0;
+        for (var n = 1L; n <= S; n++)
+        {
+            for (var k = 1L; k <= q; k++)
+            {
+                s += k / (1.0 * n * n * q + 1.0 * n * k);
+            }
+        }
+
+        return s / q;
+    }
     static void Main(string[] args)
     {
+
+        var g = GetGamma();
+        Console.WriteLine($"Gamma: {g}");
         long total = 0;
 
         for (int c = 1; c < 1000; c++)
