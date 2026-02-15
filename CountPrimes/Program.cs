@@ -40,8 +40,19 @@ internal class Program
     static double s3 = Math.Sqrt(3);
     static double s5 = Math.Sqrt(5);
 
-
-    static double GetGamma(long S = 10000)
+    static double GetGammaAt(double x = 0.0)
+        => 7.0 * 7.0 / 10.0 * Math.Exp(-2.0 * x) * Math.Log(
+                1.0 + (
+                    (Math.Exp(4.0 * x))
+                    /
+                    (1.0 + 3.0 * Math.Exp(x)
+                        + 2.0 * Math.Exp(2.0 * x)
+                        + Math.Exp(3.0 * x)
+                        + Math.Exp(4.0 * x)
+                     )
+                    )
+            );
+    static double GetGammaByLoop(long S = 10000)
     {
         var q = S * S;
         var s = 0.0;
@@ -55,10 +66,23 @@ internal class Program
 
         return s / q;
     }
+    static double GetGamma(double x1 = -0.1, double x2 = 0.1, long d = 10000000)
+    {
+        var list = new List<double>();
+        var delta = 1.0 / d;
+        for (double x = x1; x <= x2; x += delta)
+        {
+            var g = GetGammaAt(x);
+            list.Add(g);
+        }
+        return list.Max();
+    }
     static void Main(string[] args)
     {
 
-        var g = GetGamma();
+        var g = GetGammaAt(0);
+        g = GetGamma();
+        g = GetGammaByLoop();
         Console.WriteLine($"Gamma: {g}");
         long total = 0;
 
