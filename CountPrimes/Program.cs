@@ -36,22 +36,16 @@ internal class Program
     }
 
     static double DPi(double x) => NPi(Math.Log2(x));
-    static double s2 = Math.Sqrt(2);
-    static double s3 = Math.Sqrt(3);
-    static double s5 = Math.Sqrt(5);
 
-    static double GetGammaAt(double x = 0.0)
-        => 7.0 * 7.0 / 10.0 * Math.Exp(-2.0 * x) * Math.Log(
-                1.0 + (
-                    (Math.Exp(4.0 * x))
-                    /
-                    (1.0 + 3.0 * Math.Exp(x)
-                        + 2.0 * Math.Exp(2.0 * x)
-                        + Math.Exp(3.0 * x)
-                        + Math.Exp(4.0 * x)
-                     )
-                    )
-            );
+    static readonly double kk = 1.0 / Math.Tan(0.5 * Math.Atan(Math.Log(2.0)));
+
+    static double C(double x)
+        => 1.0 + Math.Exp(6.0 * x) / (1.0 + 3.0 * Math.Exp(2.0 * x) + 3.0 * Math.Exp(4.0 * x) + Math.Exp(6.0 * x));
+    static double GetGammaAt(double x = 0.0, double sign = -1.0)
+        => sign * (kk * kk *
+            ((Math.Exp(4.0 * x) - Math.Exp(2.0 * x)) / Math.Exp(6.0 * x))
+            * Math.Log(C(x))
+            + kk * Math.Log(C(x)) / Math.Exp(4.0 * x));
     static double GetGammaByLoop(long S = 10000)
     {
         var q = S * S;
@@ -66,7 +60,7 @@ internal class Program
 
         return s / q;
     }
-    static double GetGamma(double x1 = -0.1, double x2 = 0.1, long d = 10000000)
+    static double GetGamma(double x1 = -1.0, double x2 = 0, long d = 10000000)
     {
         var list = new List<double>();
         var delta = 1.0 / d;
@@ -79,10 +73,8 @@ internal class Program
     }
     static void Main(string[] args)
     {
-
-        var g = GetGammaAt(0);
-        g = GetGamma();
-        g = GetGammaByLoop();
+        var g = GetGamma();
+        //g = GetGammaByLoop();
         Console.WriteLine($"Gamma: {g}");
         long total = 0;
 
