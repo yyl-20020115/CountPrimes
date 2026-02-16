@@ -38,7 +38,24 @@ internal class Program
     static double DPi(double x) => NPi(Math.Log2(x));
 
     static readonly double kk = 1.0 / Math.Tan(0.5 * Math.Atan(Math.Log(2.0)));
-
+    static double GetPi(long max = 1000)
+    {
+        double p = 4.0;
+        for (var n = max; n >= 1; n--)
+        {
+            p = (2.0 + (1.0 * n) * p / (2.0 * n + 1.0));
+        }
+        return p * 2;
+    }
+    static double GetP(double p, long max = 1000000)
+    {
+        var p0 = p;
+        for (var n = max; n >= 1; n--)
+        {
+            p = (p0 + (1.0 * n) * p / (p0 * n + 1.0));
+        }
+        return p;
+    }
     static double C(double x)
         => 1.0 + Math.Exp(6.0 * x) / (1.0 + 3.0 * Math.Exp(2.0 * x) + 3.0 * Math.Exp(4.0 * x) + Math.Exp(6.0 * x));
     static double GetGammaAt(double x = 0.0, double sign = -1.0)
@@ -46,6 +63,7 @@ internal class Program
             ((Math.Exp(4.0 * x) - Math.Exp(2.0 * x)) / Math.Exp(6.0 * x))
             * Math.Log(C(x))
             + kk * Math.Log(C(x)) / Math.Exp(4.0 * x));
+
     static double GetGammaByLoop(long S = 10000)
     {
         var q = S * S;
@@ -73,6 +91,13 @@ internal class Program
     }
     static void Main(string[] args)
     {
+        //var pi = GetPi();
+        for(long t = 2; t < 100; t++)
+        {
+            var pt = GetP(t);
+            Console.WriteLine("P({0}) = {1}", t, pt);
+        }
+
         var g = GetGamma();
         //g = GetGammaByLoop();
         Console.WriteLine($"Gamma: {g}");
