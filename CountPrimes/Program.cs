@@ -47,7 +47,8 @@ internal class Program
         }
         return p * 2;
     }
-    static double GetP(double p, long max = 1000000)
+    //v = p + n * v / (p * n + 1)
+    static double GetP(double p, long max = 100000000)
     {
         var p0 = p;
         for (var n = max; n >= 1; n--)
@@ -56,6 +57,16 @@ internal class Program
         }
         return p;
     }
+    static double GetInverseP(double p, long max = 100000000)
+    {
+        var p0 = p;
+        for (var n = max; n >= 1; n--)
+        {
+            p = p0 + 1.0 / (p0 + p / n);
+        }
+        return p - p0;
+    }
+
     static double C(double x)
         => 1.0 + Math.Exp(6.0 * x) / (1.0 + 3.0 * Math.Exp(2.0 * x) + 3.0 * Math.Exp(4.0 * x) + Math.Exp(6.0 * x));
     static double GetGammaAt(double x = 0.0, double sign = -1.0)
@@ -91,11 +102,19 @@ internal class Program
     }
     static void Main(string[] args)
     {
-        //var pi = GetPi();
-        for(long t = 2; t < 100; t++)
+        var pi = GetInverseP(0.5);
+        for (long t = 1000; t < 10000000000; t *= 100)
+        {
+            var v = GetInverseP(0.5, t);
+            var pt = v;
+            Console.WriteLine("P({0}) = {1}", t, pt);
+        }
+
+        for (long t = 2; t < 400; t++)
         {
             var pt = GetP(t);
-            Console.WriteLine("P({0}) = {1}", t, pt);
+            var p2 = GetInverseP(t);
+            Console.WriteLine("P({0}) = {1},{2}", t, pt, p2);
         }
 
         var g = GetGamma();
