@@ -82,7 +82,7 @@ internal class Program
         {
             s = 1.0 / (x + s);
         }
-        return s + 3.0;
+        return s + x;
     }
     static double C(double x)
         => 1.0 + Math.Exp(6.0 * x) / (1.0 + 3.0 * Math.Exp(2.0 * x) + 3.0 * Math.Exp(4.0 * x) + Math.Exp(6.0 * x));
