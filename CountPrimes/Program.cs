@@ -66,7 +66,24 @@ internal class Program
         }
         return p - p0;
     }
-
+    static double GetSqrt2(double x = 2.0, long max = 100000000)
+    {
+        var s = 0.0;
+        for (var n = max; n >= 1; n--)
+        {
+            s = 1.0 / (x + s);
+        }
+        return s + 1.0;
+    }
+    static double GetSqrtX(double x = 3.0, long max = 100000000)
+    {
+        var s = 0.0;
+        for (var n = max; n >= 1; n--)
+        {
+            s = 1.0 / (x + s);
+        }
+        return s + 3.0;
+    }
     static double C(double x)
         => 1.0 + Math.Exp(6.0 * x) / (1.0 + 3.0 * Math.Exp(2.0 * x) + 3.0 * Math.Exp(4.0 * x) + Math.Exp(6.0 * x));
     static double GetGammaAt(double x = 0.0, double sign = -1.0)
@@ -102,6 +119,9 @@ internal class Program
     }
     static void Main(string[] args)
     {
+        //var px = GetSqrt2(2);
+        var p3=GetSqrtX(3);
+        var px = 1 / p3;
         var pi = GetInverseP(0.5);
         for (long t = 1000; t < 10000000000; t *= 100)
         {
